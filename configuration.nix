@@ -44,6 +44,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # busybox
+    cabal-install
+    cabal2nix
     acpilight
     firefox
     git
@@ -53,6 +55,7 @@
     neofetch
     nodejs
     termite
+    ghc
     konsole
     (import ./vim.nix)
     nix-prefetch-github
@@ -64,6 +67,9 @@
     termonad-with-packages
     irssi
     fzf
+    tmux
+    tree
+    vscode
     xloadimage
 
     dmenu                    # A menu for use with xmonad
