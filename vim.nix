@@ -20,6 +20,14 @@ let plugins = let inherit (vimUtils) buildVimPluginFrom2Nix; in {
       sha256 = "03d12fi90kbhf74p1yh721nfa26r2ns7ad5k6a7n6fwl3anrq4g4";
     };
   };
+  "scss-syntax.vim" = buildVimPluginFrom2Nix {
+    name = "scss-syntax.vim";
+    src = fetchgit {
+      url = "https://github.com/cakebaker/scss-syntax.vim";
+      rev = "bda22a93d1dcfcb8ee13be1988560d9bb5bd0fef";
+      sha256 = "0p6yy6d7lwi87rvk4c6b2ggrvpddrfksrgdwz993gvxxxbnpwi8q";
+    };
+  };
   "lightline" = buildVimPluginFrom2Nix {
     name = "lightline";
     src = fetchgit {
@@ -46,6 +54,9 @@ let plugins = let inherit (vimUtils) buildVimPluginFrom2Nix; in {
       let g:lightline = {
       \ 'colorscheme': 'one',
       \ }
+      autocmd FileType scss set iskeyword+=-
+      au BufRead,BufNewFile *.scss set filetype=scss.css
+      autocmd Filetype css setlocal tabstop=2
     '';
     # Use the default plugin list shipped with nixpkgs
     vimrcConfig.vam.knownPlugins = pkgs.vimPlugins // plugins;
@@ -60,6 +71,7 @@ let plugins = let inherit (vimUtils) buildVimPluginFrom2Nix; in {
             "lightline"
             "haskell-vim"
             "vim-nix"
+            "scss-syntax.vim"
         ]; }
     ];
 }

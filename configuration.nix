@@ -12,6 +12,7 @@
       ./zsh.nix
     ];
 
+  nixpkgs.config.allowUnfree = true;
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -53,7 +54,7 @@
     htop
     gimp
     neofetch
-    nodejs
+    nodejs-10_x
     termite
     ghc
     konsole
