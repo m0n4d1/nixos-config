@@ -4,6 +4,12 @@
 
 { config, pkgs, ... }:
 
+let
+  unstableTarball =
+    fetchTarball
+      https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
+in
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -12,7 +18,14 @@
       ./zsh.nix
     ];
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    packageOverrides = pkgs: {
+      unstable = import unstableTarball {
+        config = config.nixpkgs.config;
+      };
+    };
+  };
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -70,8 +83,11 @@
     fzf
     tmux
     tree
-    vscode
     xloadimage
+    unstable.vscode
+
+    nodePackages.mocha
+
 
     dmenu                    # A menu for use with xmonad
     feh                      # A light-weight image viewer to set backgrounds
