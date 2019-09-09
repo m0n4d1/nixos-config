@@ -57,7 +57,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # busybox
+    busybox
     cabal-install
     cabal2nix
     acpilight
@@ -86,13 +86,8 @@ in
     xloadimage
     unstable.vscode
 
-    nodePackages.mocha
-
-
     dmenu                    # A menu for use with xmonad
     feh                      # A light-weight image viewer to set backgrounds
-    haskellPackages.libmpd   # Shows MPD status in xmobar
-    haskellPackages.xmobar   # A Minimalistic Text Based Status Bar
     libnotify                # Notification client for my Xmonad setup
     lxqt.lxqt-notificationd  # The notify daemon itself
     mpc_cli                  # CLI for MPD, called from xmonad
@@ -105,6 +100,16 @@ in
     xscreensaver             # My preferred screensaver
     xsettingsd               # A lightweight desktop settings server
 
+    # -----------------------
+    # LANGUAGE PACKAGES
+    # -----------------------
+    elmPackages.elm
+
+    haskellPackages.hlint    # linting for haskell
+    haskellPackages.libmpd   # Shows MPD status in xmobar
+    haskellPackages.xmobar   # A Minimalistic Text Based Status Bar
+
+    nodePackages.mocha
   ];
 
   fonts = {
@@ -158,9 +163,19 @@ in
 
   # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+#  hardware.pulseaudio.enable = true;
+#
+#  hardware.acpilight.enable = true;
 
-  hardware.acpilight.enable = true;
+  hardware = {
+    pulseaudio.enable = true;
+    acpilight.enable = true;
+    nvidia.optimus_prime = {
+      enable = true;
+      nvidiaBusId = "PCI:1:0:0";
+      intelBusId = "PCI:0:2:0";
+    };
+  };
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
   # services.xserver.layout = "us";
@@ -169,6 +184,7 @@ in
   services = {
     xserver = {
       enable = true;
+      videoDrivers = [ "nvidia" ];
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
