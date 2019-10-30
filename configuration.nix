@@ -4,11 +4,11 @@
 
 { config, pkgs, ... }:
 
-let
-  unstableTarball =
-    fetchTarball
-      https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
-in
+# let
+#   unstableTarball =
+#     fetchTarball
+#       https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
+# in
 
 {
   imports =
@@ -20,11 +20,11 @@ in
 
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
+#     packageOverrides = pkgs: {
+#       unstable = import unstableTarball {
+#         config = config.nixpkgs.config;
+#       };
+#     };
   };
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -61,17 +61,21 @@ in
     cabal-install
     cabal2nix
     acpilight
+    elixir
     firefox
     git
     stack
     htop
     gimp
+    inkscape
     neofetch
     nodejs-10_x
     termite
     ghc
+    google-chrome
     konsole
     (import ./vim.nix)
+    imagemagick
     nix-prefetch-github
     pulseeffects
     wget 
@@ -84,7 +88,7 @@ in
     tmux
     tree
     xloadimage
-    unstable.vscode
+    vscode
 
     dmenu                    # A menu for use with xmonad
     feh                      # A light-weight image viewer to set backgrounds
