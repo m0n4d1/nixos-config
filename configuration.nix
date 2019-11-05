@@ -4,11 +4,11 @@
 
 { config, pkgs, ... }:
 
-# let
-#   unstableTarball =
-#     fetchTarball
-#       https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
-# in
+let
+  unstableTarball =
+    fetchTarball
+      https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
+in
 
 {
   imports =
@@ -20,11 +20,12 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-#     packageOverrides = pkgs: {
-#       unstable = import unstableTarball {
-#         config = config.nixpkgs.config;
-#       };
-#     };
+
+     packageOverrides = pkgs: {
+       unstable = import unstableTarball {
+         config = config.nixpkgs.config;
+       };
+     };
   };
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -57,11 +58,13 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    beep
     busybox
     cabal-install
     cabal2nix
     acpilight
     elixir
+    espeak
     firefox
     git
     stack
@@ -69,7 +72,7 @@
     gimp
     inkscape
     neofetch
-    nodejs-10_x
+    unstable.nodejs-13_x
     termite
     ghc
     google-chrome
@@ -78,6 +81,7 @@
     imagemagick
     nix-prefetch-github
     pulseeffects
+    pavucontrol
     wget 
     zsh
     oh-my-zsh
@@ -85,10 +89,13 @@
     termonad-with-packages
     irssi
     fzf
+    geckodriver
+    steam-run
+    ranger
     tmux
     tree
     xloadimage
-    vscode
+    unstable.vscode
 
     dmenu                    # A menu for use with xmonad
     feh                      # A light-weight image viewer to set backgrounds
