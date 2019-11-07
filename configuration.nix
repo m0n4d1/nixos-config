@@ -146,6 +146,7 @@ in
 
   programs.dconf.enable = true;
   programs.light.enable = true;
+  programs.vim.defaultEditor = true;
   # programs.git = {
   #   enable = true;
   #   userName  = "m0n4d1";
