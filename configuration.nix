@@ -40,6 +40,7 @@ in
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
+  networking.dnsExtensionMechanism = false;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -80,10 +81,12 @@ in
     (import ./vim.nix)
     imagemagick
     nix-prefetch-github
+    openshot-qt
     pulseeffects
     pavucontrol
     wget 
     zsh
+    mupen64plus
     oh-my-zsh
     xmobar
     termonad-with-packages
@@ -95,6 +98,7 @@ in
     tmux
     tree
     xloadimage
+    unrar
     unstable.vscode
 
     dmenu                    # A menu for use with xmonad
@@ -146,7 +150,7 @@ in
 
   programs.dconf.enable = true;
   programs.light.enable = true;
-  programs.vim.defaultEditor = true;
+  # programs.vim.defaultEditor = true;
   # programs.git = {
   #   enable = true;
   #   userName  = "m0n4d1";
@@ -165,7 +169,10 @@ in
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedTCPPorts = [ 
+  #   80
+  #   443
+  # ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -196,6 +203,7 @@ in
   services = {
     xserver = {
       enable = true;
+      dpi = 96;
       videoDrivers = [ "nvidia" ];
       windowManager.xmonad = {
         enable = true;
@@ -213,6 +221,19 @@ in
       libinput.enable = true;
       xkbOptions = "caps:swapescape";
       layout = "us";
+      screenSection = ''
+        Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }" 
+      '';
+      xrandrHeads = [
+        {
+          output = "eDP-1-1";
+          primary = true;
+          monitorConfig = ''
+            option "DPMS" "false"
+            option "PreferredMode" "1920x1080"
+          '';
+        }
+      ];
     };
     openssh.enable = true;
   };
@@ -243,6 +264,6 @@ in
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "19.03"; # Did you read the comment?
+  system.stateVersion = "19.09"; # Did you read the comment?
 
 }
