@@ -189,10 +189,13 @@ in
   hardware = {
     pulseaudio.enable = true;
     acpilight.enable = true;
-    nvidia.optimus_prime = {
-      enable = true;
-      nvidiaBusId = "PCI:1:0:0";
-      intelBusId = "PCI:0:2:0";
+    nvidia = {
+      modesetting.enable = true;
+      optimus_prime = {
+        enable = true;
+        nvidiaBusId = "PCI:1:0:0";
+        intelBusId = "PCI:0:2:0";
+      };
     };
   };
   # Enable the X11 windowing system.
@@ -221,9 +224,9 @@ in
       libinput.enable = true;
       xkbOptions = "caps:swapescape";
       layout = "us";
-      screenSection = ''
-        Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }" 
-      '';
+      # screenSection = ''
+      #   Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }" 
+      # '';
       xrandrHeads = [
         {
           output = "eDP-1-1";
