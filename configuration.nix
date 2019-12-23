@@ -87,6 +87,7 @@ in
     wget 
     zsh
     mupen64plus
+    nasm
     oh-my-zsh
     xmobar
     termonad-with-packages
